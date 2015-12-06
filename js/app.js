@@ -20,6 +20,7 @@ Enemy.prototype.update = function(dt) {
     if (this.x >= 500) {
         this.x = -50;
     };
+    checkObjectCollision(player, this);
 
 };
 
@@ -39,15 +40,23 @@ var Player = function(x, y, velocity){
     this.sprite = 'images/char-boy.png';
 };
     Player.prototype.update = function(){
-        if (this.y + 63 <= 44 ){
+        if (player.y + 63 <= 44 ){
             scorepoint();
         }
-        player.checkBounds();
-    };
+        this.x = bindObjectToBounds(this.x, 400, 10);
+        this.y = bindObjectToBounds(this.y, 380, 0);
+
+
+
+};
+
+
+
     Player.prototype.render = function(){
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
     };
+
     Player.prototype.handleInput = function(keypress){
         if (keypress == 'left'){
             player.x -= player.velocity;
@@ -63,25 +72,18 @@ var Player = function(x, y, velocity){
         }
 
     };
-    Player.prototype.checkBounds = function(){
-        if (player.x == 10){
-            player.x = 10;
-        };
-    }
-
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-var player = new Player(200, 380, 50);
-var allEnemies = [];
-var level = 0;
 
-var levelUP = function(){
+
+
+var levelUp = function(){
     allEnemies.length  = 0;
     for (var i = 0; i <= level; i++) {
-        var enemy = new Enemy(0, Math.random() * 184 + 50, Math.random() * 500);
+        var enemy = new Enemy(Math.random() * 400, Math.random() * 184 + 50, Math.random() * 300);
 
         allEnemies.push(enemy);
     };
@@ -90,17 +92,40 @@ var levelUP = function(){
     console.log(level);
 };
 
+
 var scorepoint = function(){
     player.x = 200;
     player.y = 380;
-    levelUP();
+    levelUp();
 };
 
+var bindObjectToBounds = function(object, max, min){
+    
+    if (object <= min){
+        return min;
+        }
+        else if (object >= max){
+            return max;
+        };
+        return object;
+}
+
+var checkObjectCollision = function(firstobject, secondobject){
+     if (
+        firstobject.y + 139 >= secondobject.y + 90
+        && firstobject.x + 18 <= secondobject.x + 88
+        && firstobject.y + 100 <= secondobject.y + 135
+        && firstobject.x + 84 >= secondobject.x + 11) {
+        console.log('REKT');
+        firstobject.x = 202.5;
+        firstobject.y = 383;
+
+}
+};
 var player = new Player(200, 380, 50);
 var allEnemies = [];
 var level = 0;
-levelUP();
-
+levelUp();
 
 
 // This listens for key presses and sends the keys to your
