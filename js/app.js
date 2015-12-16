@@ -9,7 +9,7 @@ Enemy.prototype.update = function(dt) {
     this.x += this.velocity * dt;
     if (this.x >= 500) {
         this.x = -50;
-    };
+    }
     // Checks to see if player collides with enemy
     checkObjectCollision(player, this);
 };
@@ -65,7 +65,7 @@ var levelUp = function() {
     for (var i = 0; i <= level; i++) {
         var enemy = new Enemy(Math.random() * 400, Math.random() * 184 + 50, Math.random() * 300);
         allEnemies.push(enemy);
-    };
+    }
     //Increases enemy count
     level++;
     console.log("Advanced to level " + level);
@@ -84,21 +84,21 @@ var bindObjectToBounds = function(object, max, min) {
         return min;
     } else if (object >= max) {
         return max;
-    };
+    }
     return object;
 };
 
 // Checks if an object collides with another object
 var checkObjectCollision = function(firstobject, secondobject) {
-     if (
-        firstobject.y + 139 >= secondobject.y + 90
-        && firstobject.x + 18 <= secondobject.x + 88
-        && firstobject.y + 100 <= secondobject.y + 135
-        && firstobject.x + 84 >= secondobject.x + 11){
+    if (
+        firstobject.y + 139 >= secondobject.y + 90 && firstobject.x + 18 <=
+        secondobject.x + 88 && firstobject.y + 100 <= secondobject.y + 135 &&
+        firstobject.x + 84 >= secondobject.x + 11) {
         console.log('You collided with an object');
         firstobject.resetPosition();
-        };
+    }
 };
+
 
 // Initialize Player, Enemies and level
 var player = new Player(200, 380, 50);
