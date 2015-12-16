@@ -1,6 +1,5 @@
-frontend-nanodegree-arcade-game
-===============================
+USE: To use this game download the entire folder to your local hdd. Open the index.html file in a web browser.
 
-Students should use this rubric: https://www.udacity.com/course/viewer#!/c-ud015/l-3072058665/m-3072588797
+GAME PLAY: Control the player to reach the water without touching any bugs. Each time you sucessfully cross, the difficulty will increase. If you touch a bug you will returned to the starting position.
 
-for self-checking their submission.
+GAME CONTROLS: Use the keyboard arrows to move the player.
