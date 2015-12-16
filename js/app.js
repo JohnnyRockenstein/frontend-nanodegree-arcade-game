@@ -28,34 +28,34 @@ var Player = function(x, y, velocity) {
     this.velocity = velocity;
     this.sprite = 'images/char-boy.png';
 };
-    Player.prototype.update = function() {
-        if (player.y + 63 <= 44) {
-            scorepoint();
-        }
-        this.x = bindObjectToBounds(this.x, 400, 10);
-        this.y = bindObjectToBounds(this.y, 380, 0);
-    };
-    Player.prototype.render = function() {
-        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    };
-    Player.prototype.handleInput = function(keypress){
-        if (keypress == 'left'){
-            player.x -= player.velocity;
-        }
-        if (keypress == 'up'){
-            player.y -= player.velocity;
-        }
-        if (keypress == 'down'){
-            player.y += player.velocity;
-        }
-        if (keypress == 'right'){
-            player.x += player.velocity;
-        }
-    };
-    Player.prototype.resetPosition = function() {
-        this.x = 200;
-        this.y = 380;
-    };
+Player.prototype.update = function() {
+    if (player.y + 63 <= 44) {
+        scorepoint();
+    }
+    this.x = bindObjectToBounds(this.x, 400, 10);
+    this.y = bindObjectToBounds(this.y, 380, 0);
+};
+Player.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+Player.prototype.handleInput = function(keypress) {
+    if (keypress == 'left') {
+        player.x -= player.velocity;
+    }
+    if (keypress == 'up') {
+        player.y -= player.velocity;
+    }
+    if (keypress == 'down') {
+        player.y += player.velocity;
+    }
+    if (keypress == 'right') {
+        player.x += player.velocity;
+    }
+};
+Player.prototype.resetPosition = function() {
+    this.x = 200;
+    this.y = 380;
+};
 
 // Increases the number of enemies in the stage
 var levelUp = function() {
@@ -94,8 +94,8 @@ var checkObjectCollision = function(firstobject, secondobject) {
         && firstobject.x + 18 <= secondobject.x + 88
         && firstobject.y + 100 <= secondobject.y + 135
         && firstobject.x + 84 >= secondobject.x + 11){
-            console.log('You collided with an object');
-            firstobject.resetPosition();
+        console.log('You collided with an object');
+        firstobject.resetPosition();
         };
 };
 
