@@ -129,13 +129,15 @@ var level;
             enemyHeight: 50,
             velocity: 300
         };
+        var enemySprite = 'images/enemy-bug.png';
+
         allEnemies.length = 0;
         for (var i = 0; i <= level; i++) {
             var enemy = new Enemy(Math.random() * multipliers.xPosition,
                 Math.random() *
                 multipliers.yPosition + multipliers.enemyHeight,
                 Math.random() *
-                multipliers.velocity, 'images/enemy-bug.png');
+                multipliers.velocity, enemySprite);
             allEnemies.push(enemy);
         }
         level++;
@@ -172,29 +174,41 @@ var level;
      * @param  {object} firstobject
      * @param  {object} secondobject
      */
-    var checkObjectCollision = function(firstobject, secondobject) {
-        var objectOutlines = {
-            playerFeet: 139,
-            playerHead: 100,
-            playerRight: 84,
-            playerLeft: 18,
-            enemyFeet: 90,
-            enemyHead: 135,
-            enemyRight: 88,
-            enemyLeft: 11
-        };
-        if (
-            firstobject.y + objectOutlines.playerFeet >= secondobject.y +
-            objectOutlines.enemyFeet && firstobject.x + objectOutlines.playerLeft <=
-            secondobject.x + objectOutlines.enemyRight && firstobject.y +
-            objectOutlines.playerHead <= secondobject.y +
-            objectOutlines.enemyHead &&
-            firstobject.x + objectOutlines.playerRight >= secondobject.x +
-            objectOutlines.enemyLeft) {
-            console.log('You collided with an object');
-            firstobject.resetPosition();
+    var checkObjectCollision = function(playerSprite, enemySprite) {
+        var playerEdge = {
+            feet: 139,
+            head: 100,
+            right: 84,
+            left: 18
         }
+
+        var enemyEdge = {
+            feet: 90,
+            head: 135,
+            right: 88,
+            left: 11
+        };
+
+        var playerBuffer = getPlayerSpriteBuffers(playerSprite, playerEdge);
+        var enemyBuffer = getPlayerSpriteBuffers(enemySprite, enemyEdge);
+
+        if ( playerBuffer.feet >= enemyBuffer.feet
+            && playerBuffer.left <= enemyBuffer.right
+            && playerBuffer.head <= enemyBuffer.head
+            && playerBuffer.right >= enemyBuffer.left) {
+                console.log('You collided with an object');
+                playerSprite.resetPosition();
+            }
     };
+
+    function getPlayerSpriteBuffers(spriteObject, edges){
+        return {
+            feet: spriteObject.y + edges.feet,
+            head: spriteObject.y + edges.head,
+            right: spriteObject.x + edges.right,
+            left: spriteObject.x + edges.left,
+        }
+    }
 
     /**
      * Create new player and set game to level 1
