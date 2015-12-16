@@ -10,6 +10,7 @@ Enemy.prototype.update = function(dt) {
     if (this.x >= 500) {
         this.x = -50;
     };
+    // Checks to see if player collides with enemy
     checkObjectCollision(player, this);
 };
 
@@ -21,7 +22,6 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-
 var Player = function(x, y, velocity) {
     this.x = x;
     this.y = y;
@@ -30,7 +30,7 @@ var Player = function(x, y, velocity) {
 };
 Player.prototype.update = function() {
     if (player.y + 63 <= 44) {
-        scorepoint();
+        scorePoint();
     }
     this.x = bindObjectToBounds(this.x, 400, 10);
     this.y = bindObjectToBounds(this.y, 380, 0);
@@ -52,6 +52,7 @@ Player.prototype.handleInput = function(keypress) {
         player.x += player.velocity;
     }
 };
+//Returns player to home position
 Player.prototype.resetPosition = function() {
     this.x = 200;
     this.y = 380;
@@ -59,20 +60,20 @@ Player.prototype.resetPosition = function() {
 
 // Increases the number of enemies in the stage
 var levelUp = function() {
+    //Removes exiting enemies
     allEnemies.length = 0;
     for (var i = 0; i <= level; i++) {
         var enemy = new Enemy(Math.random() * 400, Math.random() * 184 + 50, Math.random() * 300);
         allEnemies.push(enemy);
     };
+    //Increases enemy count
     level++;
     console.log("Advanced to level " + level);
     return level;
 };
 
 // Awards player a point for reaching water and returns him to start location
-var scorepoint = function() {
-    ctx.fillStyle = 'white';
-    ctx.fillRect(0, 0, 505, 171);
+var scorePoint = function() {
     levelUp();
     player.resetPosition();
 };
@@ -99,10 +100,11 @@ var checkObjectCollision = function(firstobject, secondobject) {
         };
 };
 
-//Initialize Player and Enemies
+// Initialize Player, Enemies and level
 var player = new Player(200, 380, 50);
 var allEnemies = [];
 var level = 0;
+// Sets game to first level
 levelUp();
 
 // This listens for key presses and sends the keys to your
